@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <title>Exercício pré-Rocket 18</title>
+        <meta charset="utf-8">      
+    </head>
+    <body>
+        <h2>Questionário</h2>
+        <label for="age">Insira sua idade</label>
+        <input type="number" id="age" autofocus>
+        <label for="weight">Insira seu peso</label>
+        <input type="number" id="weight">
+
+        <p>Insira seu sexo</p>
+        <label>Masculino<input type="radio" id="sex" name="sex" value="Masculino" checked></label>
+        <label>Feminino<input type="radio" id="sex" name="sex" value="Feminino"></label>
+
+        <button type="submit" id="submitBtn" onclick="saveData()">Enviar</button>
+        
+        <div id="msg"></div>
+
+        <script>
+            var ageInput = document.getElementById('age');
+            var weightInput = document.getElementById('weight');
+            var radioElements = document.querySelectorAll('#sex');
+            var submitBtn = document.getElementById('submitBtn'); 
+            var divElement = document.querySelector('#msg');
+
+            var data = [];
+            var counter = 0;
+
+            function saveData(){
+                if(isNaN(ageInput.value) || ageInput.value < 0){
+                    alert('Insira uma idade válida');
+                    ageInput.value = '';
+                    ageInput.focus();
+                }else if(isNaN(weightInput.value) || weightInput.value < 0){
+                    alert('Insira um peso válido');
+                    weightInput.value = '';
+                    weightInput.focus();
+                }else{
+                    var sexValue = '';
+                    for(var i = 0; i < radioElements.length; i++){
+                        if(radioElements[i].checked){
+                            sexValue = radioElements[i].value;
+                            radioElements[i].checked = false;
+                        }
+                    }
+
+                    data.push({age: ageInput.value, weight: weightInput.value, sex: sexValue});
+
+                    ageInput.value = '';
+                    ageInput.focus();
+                    weightInput.value = '';
+                    radioElements[0].checked = true;
+                    counter++;
+    
+                    if(counter === 10){
+                        submitBtn.disabled = true;
+                        generateResults();
+                    }
+                }
+            }
+
+            function generateResults(){
+                var menArr = data.filter(function(obj){
+                    if(obj.sex == 'Masculino'){
+                        return obj;
+                    }
+                });
+                var menQty = menArr.length;
+
+                var womenArr = data.filter(function(obj){
+                    if(obj.sex == 'Feminino'){
+                        return obj;
+                    }
+                });
+                var womenQty = womenArr.length;
+
+                var menMeanAge = calcMeanAge(menArr);
+                var womenMeanWeight = calcMeanWeight(womenArr);
+
+                divElement.innerHTML = 'A quantidade de homens é ' + menQty + ' <br>' + 'A quantidade de mulheres é ' + womenQty + '<br>' + 'A média das idades dos homens é ' + menMeanAge + '<br>' + 'A média dos pesos das mulheres é ' + womenMeanWeight + '<br>';
+            }
+
+            function calcMeanAge(arr){
+                var ageArr = arr.map(function(obj){
+                    return obj.age;
+                });
+
+                var ageSum = 0;
+
+                for (var i = 0; i < ageArr.length; i++){
+                    ageSum += parseInt(ageArr[i]);
+                }
+
+                var ageMean = ageSum / ageArr.length;
+                ageMean = ageMean.toFixed(2);
+
+                return ageMean;
+            }
+
+            function calcMeanWeight(arr){
+                var weightArr = arr.map(function(obj){
+                    return obj.weight;
+                });
+                
+                var weightSum = 0;
+
+                for (var i = 0; i < weightArr.length; i++){
+                    weightSum += parseInt(weightArr[i]);
+                }
+                
+                var weightMean = weightSum / weightArr.length;
+                weightMean = weightMean.toFixed(2);
+
+                return weightMean;
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <title>Exercício pré-Rocket 2</title>
+        <meta charset="utf-8">      
+    </head>
+    <body>
+        <h2>Calculando o quadrado</h2>
+        <label for="score">Insira 5 números</label>
+        <input type="number" id="score" autofocus>
+        <button type="submit" id="submitBtn">Enviar</button>
+        
+        <table>
+            <tbody>
+                <tr class="numbers">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <script>
+            var scoreInput = document.getElementById('score');
+            var submitBtn = document.getElementById('submitBtn'); 
+            var tdElements = document.querySelectorAll('td')
+            var numbers = [];
+            var counter = 0;
+
+            submitBtn.addEventListener('click', function(){
+                saveNumber()
+            });
+
+            scoreInput.addEventListener('keyup', function(e){
+                if(e.keyCode === 13){
+                    saveNumber();
+                }
+            });
+
+            function saveNumber(){
+                if(isNaN(scoreInput.value)){
+                    alert('Insira um número válido');
+                    scoreInput.value = '';
+                    scoreInput.focus();
+                }else{ 
+                    numbers.push(scoreInput.value);
+                    scoreInput.value = '';
+                    scoreInput.focus();
+                    counter++;
+
+                    if(counter === 5){
+                        submitBtn.disabled = true;
+                        generateSquares();
+                    }
+                }
+            }
+
+            function generateSquares(){
+                var innerCounter = 0;
+
+                while(tdElements[innerCounter]){
+                    tdElements[innerCounter].textContent = numbers[innerCounter] * numbers[innerCounter];
+                    innerCounter++;
+                }
+            }
+        </script>
+    </body>
+</html>

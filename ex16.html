@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <title>Exercício pré-Rocket 16</title>
+        <meta charset="utf-8">      
+    </head>
+    <body>
+        <h2>Questionário de opinião</h2>
+        <label for="age">Insira sua idade</label>
+        <input type="number" id="age" autofocus>
+        <p>Insira a nota do filme</p>
+
+        <label>Ótimo <input type="radio" id="score" name="score" value="Otimo" checked></label>
+        <label>Bom <input type="radio" id="score" name="score" value="Bom"></label>
+        <label>Regular <input type="radio" id="score" name="score" value="Regular"></label>
+
+        <button type="submit" id="submitBtn" onclick="saveData()">Enviar</button>
+        
+        <div id="msg"></div>
+
+        <script>
+            var ageInput = document.getElementById('age');
+            var radioElements = document.querySelectorAll('#score');
+            var submitBtn = document.getElementById('submitBtn'); 
+            var divElement = document.querySelector('#msg');
+            var data = [];
+            var counter = 0;
+
+            function saveData(){
+                if(isNaN(ageInput.value) || ageInput.value < 0){
+                    alert('Insira uma idade válida');
+                    ageInput.value = '';
+                    ageInput.focus();
+                }else{ 
+                    var radioGrade = '';
+                    for(var i = 0; i < radioElements.length; i++){
+                        if(radioElements[i].checked){
+                            radioGrade = radioElements[i].value;
+                            radioElements[i].checked = false;
+                        }
+                    }
+
+                    data.push({age: ageInput.value, grade: radioGrade});
+                    ageInput.value = '';
+                    ageInput.focus();
+                    radioElements[0].checked = true;
+                    counter++;
+    
+                    if(counter === 15){
+                        submitBtn.disabled = true;
+                        generateResults();
+                    }
+                }
+            }
+
+            function generateResults(){
+                var greatGradeAgeMean = calcGreatGradeAgeMean();
+                var regularGradeArr = data.filter(function(obj){
+                    if( obj.grade == 'Regular'){
+                        return obj;
+                    }
+                });
+                var regularQty = regularGradeArr.length;
+
+                var goodGradeArr = data.filter(function(obj){
+                    if( obj.grade == 'Bom'){
+                        return obj;
+                    }
+                });
+                var goodQty = goodGradeArr.length;
+
+                var totalQty = data.length;
+
+                var percentage = (goodQty / totalQty) * 100;
+                percentage = percentage.toFixed(2);
+
+                divElement.innerHTML = 'A média das idades das pessoas que responderam ótimo é ' + greatGradeAgeMean + ' <br>' + 'A quantidade de pessoas que responderam regular é ' + regularQty + '<br>' + 'A percentagem de pessoas que responderam bom é ' + percentage + '%';
+            }
+
+            function calcGreatGradeAgeMean(){
+                var greatGradeArr = data.filter(function(obj){
+                    if( obj.grade == 'Otimo'){
+                        return obj;
+                    }
+                });
+                var greatGradeAges = greatGradeArr.map(function(obj){
+                    return obj.age;
+                });
+
+                var agesSum = 0;
+
+                for (var i = 0; i < greatGradeAges.length; i++){
+                    agesSum += parseInt(greatGradeAges[i]);
+                }
+
+                var len = greatGradeAges.length;
+
+                var agesMean = agesSum /  len;
+                agesMean= agesMean.toFixed(2);
+
+                return agesMean;
+            }
+        </script>
+    </body>
+</html>

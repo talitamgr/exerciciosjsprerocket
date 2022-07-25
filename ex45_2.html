@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <title>Exercício pré-Rocket 45-2</title>
+        <meta charset="utf-8">      
+    </head>
+    <body>
+        <label for="select">Selecione uma opção</label>
+        <select onchange="getOption()" name="select">
+            <option>-</option>
+            <option value="desc">Do maior para o menor</option>
+            <option value="asc">Do menor para a maior</option>
+        </select>
+
+        <ul id="names"></ul>
+
+        <script>
+            var selectInput = document.querySelector('select'); 
+            var ulElement = document.querySelector("#names");
+            var gods = [
+                {name: 'Aegir', power: 10},
+                {name: 'Aud', power: 5},
+                {name: 'Balder', power: 7},
+                {name: 'Bragi', power: 4},
+                {name: 'Búri', power: 9},
+                {name: 'Dag', power: 10},
+                {name: 'Dellingr', power: 3}
+            ];
+
+            function getOption(){
+                ulElement.textContent = "";
+
+                if(selectInput.value == 'asc'){
+                    showAsc();
+                }else if(selectInput.value == 'desc'){
+                    showDesc();
+                }
+            }
+
+            function showAsc(){
+                var asc = gods.sort(function(a, b){
+                    return parseFloat(a.power) - parseFloat(b.power);
+                });
+                
+                showElements(asc);
+            };
+
+            function showDesc(){
+                var desc = gods.sort(function(a, b) {
+                    return parseFloat(b.power) - parseFloat(a.power);
+                });
+                
+                showElements(desc);
+            }
+
+            function showElements(itens){
+                for(var i = 0; i < itens.length; i++){
+                    var li = document.createElement('li');
+                    var god = document.createTextNode(itens[i].name + ' tem poder ' + itens[i].power);
+                    li.appendChild(god);
+                    ulElement.appendChild(li);
+                }
+            }        
+        </script>
+    </body>
+</html>

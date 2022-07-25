@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <title>Exercício pré-Rocket 15</title>
+        <meta charset="utf-8">      
+    </head>
+    <body>
+        <div id="msg"></div>
+
+        <script>
+            var people = [
+                {height: 180, sex: 'M'},
+                {height: 190, sex: 'M'},
+                {height: 175, sex: 'M'},
+                {height: 188, sex: 'M'},
+                {height: 195, sex: 'M'},
+                {height: 160, sex: 'F'},
+                {height: 170, sex: 'F'},
+                {height: 165, sex: 'F'},
+                {height: 150, sex: 'F'},
+                {height: 163, sex: 'F'},
+                {height: 155, sex: 'F'},
+                {height: 172, sex: 'F'},
+                {height: 179, sex: 'F'},
+                {height: 160, sex: 'M'},
+                {height: 161, sex: 'F'}
+            ];
+
+            var divElement = document.getElementById('msg');
+
+            var minHeight = Math.min(...people.map(function(obj){
+                return obj.height;
+            }));
+            var maxHeight = Math.max(...people.map(function(obj){
+                return obj.height;
+            }));
+
+            var womenArr = people.filter(function(obj){
+                if( obj.sex == 'F'){
+                    return obj;
+                }
+            });
+            var womenHeightArr = womenArr.map(function(obj){
+                return obj.height;
+            });
+
+            var womenHeightSum = 0;
+
+            for (var i = 0; i < womenHeightArr.length; i++){
+                womenHeightSum += womenHeightArr[i];
+            }
+
+            var womenHeightMean = womenHeightSum / womenHeightArr.length;
+            womenHeightMean = womenHeightMean.toFixed(2);
+
+            var menArr = people.filter(function(obj){
+                if( obj.sex == 'M'){
+                    return obj;
+                }
+            })
+
+            var numM = menArr.length;
+
+            divElement.innerHTML = 'A menor altura é ' + minHeight + ' cm e a maior altura é ' + maxHeight +' cm <br>' + 'A média da altura das mulheres é ' + womenHeightMean + ' cm <br>' + 'O número de homens é ' + numM;                
+        </script>
+    </body>
+</html>

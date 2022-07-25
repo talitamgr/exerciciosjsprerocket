@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <title>Exercício pré-Rocket 23</title>
+        <meta charset="utf-8">      
+    </head>
+    <body>
+        <label>CPF: <input type="text" maxlength="14" id="cpf" autofocus onkeyup="showCpf()"></label>
+        <div id="msg"></div>
+        <script>
+            function showCpf(){
+                var inputCpf = document.getElementById('cpf').value;
+                var divElement = document.getElementById('msg');
+        
+                divElement.textContent = inputCpf.replaceAll(".", "").replace("-", "");
+            }
+        </script>
+    </body>
+</html>

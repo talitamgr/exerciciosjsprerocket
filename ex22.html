@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <title>Exercício pré-Rocket 22</title>
+        <meta charset="utf-8">      
+    </head>
+    <body>
+        <label>CPF: <input type="number" maxlength="11" id="cpf" autofocus onkeyup="showCpf()"></label>
+        <div id="msg"></div>
+
+        <script>
+            function showCpf(){
+                var inputCpf = document.getElementById('cpf').value;
+                var divElement = document.getElementById('msg');
+            
+                var part1 = inputCpf.substring(0,3);
+                var part2 = inputCpf.substring(3,6);
+                var part3 = inputCpf.substring(6,9);
+                var part4 = inputCpf.substring(9,11);
+
+                divElement.textContent = part1 + '.' + part2 + '.' + part3 + '-' + part4;
+            }
+        </script>
+    </body>
+</html>

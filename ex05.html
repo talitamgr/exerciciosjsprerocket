@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <title>Exercício pré-Rocket 5</title>
+        <meta charset="utf-8">      
+    </head>
+    <body>
+        <h2>Insira os dados de 5 pessoas</h2> 
+        <label for="heightInput">Insira a Altura em centímetros</label>
+        <input type="number" id="heightInput" name="height" autofocus>
+
+        <p>Sexo:</p>
+        <label>
+            Masculino
+            <input type="radio" value="homem" id="sex" name="sex" checked>
+        </label>
+        <label>
+            Feminino
+            <input type="radio" value="mulher" id="sex" name="sex">
+        </label>
+
+        <br>
+        <button type="submit" id="submitBtn">Enviar</button>   
+    
+        <div id="msg"></div>
+        
+        <script>
+            var heightInput = document.getElementById('heightInput');   
+            var submitBtn = document.getElementById('submitBtn'); 
+            var sexElements = document.querySelectorAll('#sex');
+            var divElement = document.querySelector('#msg');
+            var heights = [];
+            var sexes = [];
+            var counter = 0;
+
+            submitBtn.addEventListener('click', function(){
+                saveValues();
+            });  
+              
+            function saveValues(){
+                if(isNaN(heightInput.value)){
+                    alert('Insira um número válido');
+                    heightInput.value = '';
+                    heightInput.focus();
+                }else{ 
+                    heights.push(heightInput.value);
+                    heightInput.value = '';
+                    heightInput.focus();
+                    
+                    for(i = 0; i < sexElements.length; i++){
+                        if(sexElements[i].checked){
+                            sexes.push(sexElements[i].value);
+                            sexElements[i].checked = false;
+                        }
+                    }
+
+                    sexElements[0].checked = true;
+
+                    counter++;
+
+                    if(counter === 5){
+                        submitBtn.disabled = true;
+                        showMessage();
+                    }
+                }
+            }
+
+            function showMessage(){
+                var maxHeight = Math.max(...heights);
+                var maxHeightPosition = heights.indexOf(maxHeight.toString());
+                var womenAmnt = 0;
+                var menAmnt = 0;
+                
+                for(i = 0; i < sexes.length; i++){
+                    if(sexes[i] == "mulher"){
+                        womenAmnt++;
+                    }else{
+                        menAmnt++;
+                    }
+                }
+                
+                divElement.innerHTML= 'Existem ' + womenAmnt +' mulheres e '+ menAmnt +' homens' + '<br> A maior altura é ' + maxHeight + 'cm de um(a) '+ sexes[maxHeightPosition];
+            }
+        </script>
+    </body>
+</html>

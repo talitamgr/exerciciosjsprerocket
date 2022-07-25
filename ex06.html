@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>    
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <title>Exercício pré-Rocket 6</title>
+        <meta charset="utf-8">      
+    </head>
+    <body>
+        <label for="name">Insira alguns nomes</label>
+        <input type="text" id="name" autofocus>
+        <button type="submit" id="submitBtn">Enviar</button>
+        <button id="finishBtn">Finalizar</button>
+        <div id="msg"></div>
+
+        <script>
+            var nameInput = document.getElementById('name');
+            var submitBtn = document.getElementById('submitBtn'); 
+            var finishBtn = document.getElementById('finishBtn');
+            var divElement = document.querySelector('#msg');
+            var names = [];
+
+            submitBtn.addEventListener('click', function(){
+                saveName();
+            });  
+
+            nameInput.addEventListener('keyup', function(e){
+                if(e.keyCode === 13){
+                    saveName();
+                }
+            });
+
+            finishBtn.addEventListener('click', function(){
+                submitBtn.disabled = true;
+                finishBtn.disabled = true;
+                showMessage();
+            });
+
+            function saveName(){
+                if(!isNaN(nameInput.value)){
+                    alert('Insira um nome válido');
+                    nameInput.value = '';
+                    nameInput.focus();
+                }else{ 
+                    names.push(nameInput.value);
+                    nameInput.value = '';
+                    nameInput.focus();
+                }
+            }
+
+            function showMessage(){
+                var reverseList = names.reverse();
+                
+                divElement.textContent= reverseList.join(", ");     
+            }
+        </script>
+    </body>
+</html>

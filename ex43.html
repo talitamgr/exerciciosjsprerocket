@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <title>Exercício pré-Rocket 43</title>
+        <meta charset="utf-8">  
+        <style>
+            .vermelho{
+                background-color: red;
+            }
+        </style>    
+    </head>
+    <body>
+        <label for="text">Insira um texto</label>
+        <input type="text" id="text" autofocus>
+        <button type="submit" id="submitBtn">Enviar</button>
+        <ul id="names"></ul>
+
+        <script>
+            var textInput = document.getElementById('text'); 
+            var submitBtn = document.getElementById('submitBtn'); 
+            var ulElement= document.querySelector("#names");
+            var itens = [];
+            var counter = 0;
+
+            submitBtn.addEventListener('click', function(){
+                saveText();
+            });
+
+            textInput.addEventListener('keyup', function(e){
+                if(e.keyCode === 13){
+                    saveText();
+                }
+            });  
+                
+            function saveText(){
+                itens.push(textInput.value);
+
+                var li = document.createElement('li');
+                var textLi = document.createTextNode(itens[counter]);
+
+                li.appendChild(textLi);
+                ulElement.appendChild(li);
+
+                textInput.value = "";
+                textInput.focus();  
+                counter++;
+
+                if(counter % 2 == 0){
+                    li.className = '';
+                    li.classList.add("vermelho");
+                }
+            }
+        </script>
+    </body>
+</html>

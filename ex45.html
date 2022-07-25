@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <title>Exercício pré-Rocket 45</title>
+        <meta charset="utf-8">      
+    </head>
+    <body>
+        <label for="text">Insira um caracter</label>
+        <input type="text" id="text" maxlength="1" autofocus>
+        <button type="submit" id="submitBtn">Enviar</button>
+        <ul id="names"></ul>
+
+        <script>
+            var textInput = document.getElementById('text'); 
+            var submitBtn = document.getElementById('submitBtn'); 
+            var ulElement = document.querySelector("#names");
+
+            var gods = [
+                {name: 'Aegir', power: 10},
+                {name: 'Aud', power: 5},
+                {name: 'Balder', power: 7},
+                {name: 'Bragi', power: 4},
+                {name: 'Búri', power: 9},
+                {name: 'Dag', power: 10},
+                {name: 'Dellingr', power: 3}
+            ];
+
+            submitBtn.addEventListener('click', function(){
+                cleanWindow();
+                compareText();
+            });
+
+            textInput.addEventListener('keyup', function(e){
+                if(e.keyCode === 13){
+                    cleanWindow();
+                    compareText();
+                }
+            });  
+                
+            function compareText(){
+                for(var i = 0; i < gods.length; i++){
+                    var name = gods[i].name;
+                    var pattern = new RegExp(textInput.value, "i"); 
+                    var godIncludesChar = pattern.test(name);
+                    if(godIncludesChar){
+                        var li = document.createElement('li');
+                        var god = document.createTextNode(name);
+                        li.appendChild(god);
+                        ulElement.appendChild(li);
+                    }
+                }
+
+                textInput.value = "";
+                textInput.focus(); 
+                if(!ulElement.childElementCount){
+                    setTimeout(()=>alert("Caracter não encontrado"), 200);
+                } 
+            }
+
+            function cleanWindow(){
+                ulElement.textContent = "";
+            }
+        </script>
+    </body>
+</html>
+
+
+
+
+

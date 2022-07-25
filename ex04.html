@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <title>Exercício pré-Rocket 4</title>
+        <meta charset="utf-8">      
+    </head>
+    <body>
+        <label for="score">Insira algumas idades</label>
+        <input type="number" id="score" autofocus>
+        <button type="submit" id="submitBtn">Enviar</button>
+        <button id="finishBtn">Finalizar</button>
+        <div id="msg"></div>
+    
+        <script>
+            var scoreInput = document.getElementById('score');  
+            var submitBtn = document.getElementById('submitBtn'); 
+            var finishBtn = document.getElementById('finishBtn');
+            var divElement = document.querySelector('#msg');
+            var ages = [];
+
+            submitBtn.addEventListener('click', function(){
+                saveNumber();
+            });
+
+            scoreInput.addEventListener('keyup', function(e){
+                if(e.keyCode === 13){
+                    saveNumber();
+                }
+            });
+
+            finishBtn.addEventListener('click', function(){
+                submitBtn.disabled = true;
+                finishBtn.disabled = true;
+                verifyAges();
+            });
+
+            function saveNumber(){
+                    if(isNaN(scoreInput.value) || scoreInput.value < 0){
+                    alert('Insira um número válido');
+                    scoreInput.value = '';
+                    scoreInput.focus();
+                }else{ 
+                    ages.push(scoreInput.value);
+                    scoreInput.value = '';
+                    scoreInput.focus();
+                }
+            }
+            
+            function verifyAges(){
+                var belowAge = 0;
+                var aboveAge = 0;
+
+                for(i = 0; i < ages.length; i++){
+                    if(ages[i] < 18){
+                        belowAge++;
+                    }else{
+                        aboveAge++;
+                    }
+                }
+                
+                divElement.textContent= belowAge +' pessoas são menores de idade e ' + aboveAge + ' são maiores de idade';
+            }
+        </script>
+    </body>
+</html>
